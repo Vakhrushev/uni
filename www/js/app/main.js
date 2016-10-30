@@ -8,18 +8,6 @@ function addEvent(element, type, callback) {
 	}
 }
 
-function createDomFromString(html) {
-	var doc = document.implementation.createHTMLDocument('');
-	doc.open();
-	doc.write(html);
-	doc.close();
-	return doc;
-}
-
-function getContent(doc) {
-	return doc.getElementsByTagName('body')[0];
-}
-
 function setClass(el, className) {
 	var str = el.getAttribute('class');
 	var list = str.split(' ');
@@ -48,6 +36,12 @@ function cleanError(el) {
 	removeClass(el.parentNode, 'has-error');
 }
 
+
+function htmlToElement(html) {
+	var template = document.createElement('template');
+	template.innerHTML = html;
+	return template.content.firstChild;
+}
 
 function isValueEmpty(el) {
 	var result = true;
@@ -163,46 +157,46 @@ function trigger(el, eventType) {
 	Page.prototype.login = function () {
 		this.setPageTitle('Login');
 		reqwest('/templates/login.html', function (tmpl) {
-			var doc = createDomFromString(tmpl);
-			doc.getElementById('submit').onclick = function (e) {
+			var doc = htmlToElement(tmpl);
+			doc.querySelector('#submit').onclick = function (e) {
 				e.preventDefault();
 				if (login.check()) {
 					login.submit();
 				}
 				return false;
 			};
-			this.setBody(getContent(doc))
+			this.setBody(doc);
 			var login = new Login();
 		}.bind(this));
 	};
 	Page.prototype.singup = function () {
 		this.setPageTitle('SingUp');
 		reqwest('/templates/singup.html', function (tmpl) {
-			var doc = createDomFromString(tmpl);
-			doc.getElementById('submit').onclick = function (e) {
+			var doc = htmlToElement(tmpl);
+			doc.querySelector('#submit').onclick = function (e) {
 				e.preventDefault();
 				if (singup.check()) {
 					singup.submit();
 				}
 				return false;
 			};
-			this.setBody(getContent(doc));
+			this.setBody(doc);
 			var singup = new SingUp();
 		}.bind(this));
 	};
 	Page.prototype.contact = function (data) {
 		this.setPageTitle(data.title);
 		reqwest('/templates/contacts.html', function (tmpl) {
-			var doc = document.createDocumentFragment();
-			doc.innerHTML = tmpl;
-			doc.getElementById('city').innerText = data.data.city;
-			doc.getElementById('address').innerText = data.data.address;
-			doc.getElementById('phone').innerText = data.data.phone;
-			doc.getElementById('fio').innerText = data.data.fio;
-			var em = doc.getElementById('email');
+			var doc = htmlToElement(tmpl);
+			doc.querySelector('#city').innerText = data.data.city;
+			doc.querySelector('#address').innerText = data.data.address;
+			doc.querySelector('#phone').innerText = data.data.phone;
+			doc.querySelector('#fio').innerText = data.data.fio;
+			var em = doc.querySelector('#email');
 			em.innerText = data.data.email;
 			em.setAttribute('href', 'mailto:' + data.data.email);
-			this.setBody(getContent(doc));
+			console.log(doc);
+			this.setBody(doc);
 		}.bind(this));
 	};
 	Page.prototype.list = function (data) {

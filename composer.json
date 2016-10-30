@@ -1,0 +1,15 @@
+{
+  "name": "uni/spa",
+  "description": "spa",
+  "minimum-stability": "dev",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Vakhrushev",
+      "email": "postformy@mail.ru"
+    }
+  ],
+  "require": {
+    "nikic/fast-route": "v1.0.1"
+  }
+}

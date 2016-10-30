@@ -1,0 +1,11 @@
+use uni;
+CREATE TABLE `users` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(64) NOT NULL DEFAULT '',
+	`password` VARCHAR(255) NOT NULL DEFAULT '',
+	`dt_create` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`session_id` VARCHAR(32) NOT NULL DEFAULT '',
+	`text` TEXT NOT NULL DEFAULT '',
+	PRIMARY KEY (`id`),
+	KEY `session_id` (`session_id`(10))
+) ENGINE=InnoDB DEFAULT CHARSET = utf8

@@ -108,7 +108,6 @@ function trigger(el, eventType) {
 			, method: 'get'
 			, data: {name: this.name.value, pass: this.pass.value}
 			, success: function (json) {
-				console.log(json);
 				if (typeof json.jsUser === 'object' && json.jsUser.id > 0) {
 					app.setUser(json.jsUser)
 				}

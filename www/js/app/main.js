@@ -193,7 +193,8 @@ function trigger(el, eventType) {
 	Page.prototype.contact = function (data) {
 		this.setPageTitle(data.title);
 		reqwest('/templates/contacts.html', function (tmpl) {
-			var doc = createDomFromString(tmpl);
+			var doc = document.createDocumentFragment();
+			doc.innerHTML = tmpl;
 			doc.getElementById('city').innerText = data.data.city;
 			doc.getElementById('address').innerText = data.data.address;
 			doc.getElementById('phone').innerText = data.data.phone;
